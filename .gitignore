@@ -1,0 +1,16 @@
+# installed packages
+/node_modules
+
+# Next.js build output
+/.next
+/out
+next-env.d.ts
+*.tsbuildinfo
+
+# secrets: never commit these
+.env
+.env*.local
+
+# Mac and Vercel clutter
+.DS_Store
+.vercel
