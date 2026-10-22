@@ -1,6 +1,7 @@
 "use client";
 
-import { formatSpike, spike, type Meal } from "@/lib/meals";
+import SpikeBadge from "@/components/SpikeBadge";
+import { spike, type Meal } from "@/lib/meals";
 
 type Props = {
   ranked: Meal[]; // already sorted, highest spike first
@@ -26,7 +27,7 @@ export default function MealRanking({ ranked, latestId, swapLoadingIds, onRetryS
                   {i + 1}. {meal.dishes.map((d) => d.name).join(", ")}
                   {meal.id === latestId && <> <span className="badge">just now</span></>}
                 </span>
-                <span className={`num${value >= 50 ? " high" : ""}`}>{formatSpike(value)}</span>
+                <SpikeBadge value={value} />
               </div>
               <div className="muted">
                 {meal.before} → {meal.after} mg/dL (measured)

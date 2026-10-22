@@ -1,32 +1,48 @@
+/* Glyko brand theme: steel thali, curry leaf, haldi and red chilli.
+   Tokens match the Glyko design system (tokens.json). */
 :root {
-  --bg: #f7f5f0;
-  --card: #ffffff;
-  --text: #1f2421;
-  --muted: #6b716d;
-  --line: #e2ded5;
-  --accent: #1d7a5f;
-  --accent-text: #ffffff;
-  --warn-bg: #fff4d6;
-  --warn-line: #e8c46a;
-  --error-bg: #fde8e6;
-  --error-text: #a3261c;
-  --high: #c2410c;
+  --surface: #f4f6f5;
+  --surface-raised: #ffffff;
+  --line: #d9e0dc;
+  --steel: #c9d3ce;
+  --ink: #13261d;
+  --ink-muted: #536359;
+  --leaf: #1e6b47;
+  --on-leaf: #ffffff;
+  --leaf-soft: #ddefe4;
+  --haldi: #e0a100;
+  --on-haldi: #13261d;
+  --chilli: #b42318;
+  --on-chilli: #ffffff;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-12: 48px;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #151816;
-    --card: #1e2220;
-    --text: #ecefed;
-    --muted: #9aa29d;
-    --line: #333935;
-    --accent: #3fae8a;
-    --accent-text: #0d1210;
-    --warn-bg: #3a3220;
-    --warn-line: #8a7337;
-    --error-bg: #3d1f1c;
-    --error-text: #ff9b91;
-    --high: #fb923c;
+    --surface: #0f1a15;
+    --surface-raised: #17251e;
+    --line: #2a3b32;
+    --steel: #3a4a42;
+    --ink: #e9f0ec;
+    --ink-muted: #a3b4aa;
+    --leaf: #5cc28e;
+    --on-leaf: #0f1a15;
+    --leaf-soft: #173a29;
+    --haldi: #f2b71f;
+    --on-haldi: #13261d;
+    --chilli: #f06a55;
+    --on-chilli: #0f1a15;
+    color-scheme: dark;
   }
 }
 
@@ -34,65 +50,81 @@
 
 body {
   margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-  font-size: 17px;
-  line-height: 1.45;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-body), "Hind", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 18px;
+  line-height: 28px;
 }
 
-main { max-width: 480px; margin: 0 auto; padding: 20px 16px 40px; }
+main { max-width: 480px; margin: 0 auto; padding: var(--space-6) var(--space-4) 40px; }
 
-h1 { font-size: 24px; margin: 0 0 4px; }
-h2 { font-size: 19px; margin: 0 0 12px; }
+h1, h2, .spike, .brand-name {
+  font-family: var(--font-display), "Baloo 2", system-ui, sans-serif;
+  text-wrap: balance;
+}
 
-.sub { color: var(--muted); margin: 0 0 20px; }
-.muted { color: var(--muted); font-size: 14px; }
+/* Brand header: logo mark + lowercase wordmark */
+.brand { display: flex; align-items: center; gap: var(--space-2); color: var(--leaf); }
+.brand svg { width: 36px; height: 36px; flex: none; }
+.brand-name { font-size: 32px; line-height: 36px; font-weight: 700; color: var(--ink); margin: 0; }
+
+h2 { font-size: 21px; line-height: 28px; font-weight: 600; margin: 0 0 12px; }
+
+.sub { color: var(--ink-muted); margin: var(--space-1) 0 var(--space-6); font-size: 16px; line-height: 24px; }
+.muted { color: var(--ink-muted); font-size: 16px; line-height: 24px; }
 
 .card {
-  background: var(--card);
+  background: var(--surface-raised);
   border: 1px solid var(--line);
-  border-radius: 14px;
-  padding: 18px;
-  margin-bottom: 16px;
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  margin-bottom: var(--space-6);
 }
 
-label { display: block; font-weight: 600; margin-bottom: 8px; }
+label { display: block; font-weight: 600; margin-bottom: var(--space-2); }
 
 input[type="number"], input[type="text"] {
   width: 100%;
+  min-height: var(--space-12);
+  font: inherit;
   font-size: 18px;
-  padding: 12px;
+  padding: 10px 12px;
   border: 1px solid var(--line);
-  border-radius: 10px;
-  background: var(--bg);
-  color: var(--text);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
 }
 
 button {
+  font: inherit;
   font-size: 17px;
   font-weight: 600;
-  padding: 13px 16px;
-  border-radius: 10px;
+  min-height: var(--space-12);
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
   border: 1px solid var(--line);
-  background: var(--card);
-  color: var(--text);
+  background: var(--surface-raised);
+  color: var(--ink);
   cursor: pointer;
 }
 
-button.primary { background: var(--accent); color: var(--accent-text); border-color: var(--accent); width: 100%; }
+button.primary { background: var(--leaf); color: var(--on-leaf); border-color: var(--leaf); width: 100%; }
 button:disabled { opacity: 0.45; cursor: not-allowed; }
-button.link { background: none; border: none; color: var(--accent); padding: 6px 0; font-weight: 500; }
+button.link { background: none; border: none; color: var(--leaf); padding: 6px 0; font-weight: 600; min-height: 0; }
 
-.row { display: flex; gap: 8px; margin-top: 12px; }
+:focus-visible { outline: 2px solid var(--leaf); outline-offset: 2px; }
+
+.row { display: flex; gap: var(--space-2); margin-top: 12px; }
 .row > * { flex: 1; }
 
-.hint { color: var(--muted); font-size: 14px; margin-top: 6px; }
+.hint { color: var(--ink-muted); font-size: 16px; line-height: 24px; margin-top: 6px; }
 
 .error {
-  background: var(--error-bg);
-  color: var(--error-text);
-  border-radius: 10px;
+  background: var(--surface-raised);
+  color: var(--chilli);
+  border: 1px solid var(--chilli);
+  border-radius: var(--radius-sm);
   padding: 12px;
   margin-top: 12px;
 }
@@ -102,45 +134,63 @@ button.link { background: none; border: none; color: var(--accent); padding: 6px
   grid-template-columns: 1fr 0.8fr auto;
   gap: 6px;
   align-items: center;
-  padding: 8px;
-  border-radius: 10px;
+  padding: var(--space-2);
+  border-radius: var(--radius-sm);
   margin-bottom: 6px;
 }
-.dish input { font-size: 16px; padding: 9px; }
-.dish.unsure { background: var(--warn-bg); border: 1px solid var(--warn-line); }
-.dish .flag { grid-column: 1 / -1; font-size: 13px; font-weight: 600; }
-.dish .remove { padding: 8px 11px; }
+.dish input { font-size: 16px; }
+.dish.unsure { background: var(--haldi); }
+.dish.unsure .flag { color: var(--on-haldi); }
+.dish .flag { grid-column: 1 / -1; font-size: 14px; line-height: 20px; font-weight: 600; }
+.dish .remove { padding: 8px 14px; }
 
+/* Plain label chip, e.g. "AI's guess, please check" */
 .badge {
   display: inline-block;
-  font-size: 12px;
+  font-size: 14px;
+  line-height: 20px;
   font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 99px;
+  padding: 2px 10px;
+  border-radius: var(--radius-pill);
   border: 1px solid var(--line);
-  color: var(--muted);
+  color: var(--ink-muted);
 }
 
-.spike { font-size: 40px; font-weight: 700; margin: 4px 0; }
+/* Spike badges: fills differ in lightness in both themes; number and word always shown */
+.spike-badge {
+  display: inline-block;
+  white-space: nowrap;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-variant-numeric: tabular-nums;
+}
+.spike-badge.small { background: var(--leaf-soft); color: var(--leaf); }
+.spike-badge.medium { background: var(--haldi); color: var(--on-haldi); }
+.spike-badge.large { background: var(--chilli); color: var(--on-chilli); }
+
+.spike { font-size: 56px; line-height: 60px; font-weight: 700; margin: var(--space-1) 0; font-variant-numeric: tabular-nums; }
 
 .rank { list-style: none; padding: 0; margin: 0; }
 .rank li { border-top: 1px solid var(--line); padding: 12px 0; }
 .rank li:first-child { border-top: none; }
-.rank .top { display: flex; justify-content: space-between; gap: 8px; font-weight: 600; }
-.rank .num { white-space: nowrap; }
-.rank .num.high { color: var(--high); }
-.rank .swap { font-size: 15px; margin-top: 4px; }
+.rank .top { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-2); font-weight: 600; }
+.rank .top > span:first-child { min-width: 0; }
+.rank .swap { font-size: 16px; line-height: 24px; margin-top: var(--space-1); }
 
 .spinner {
   width: 22px; height: 22px;
   border: 3px solid var(--line);
-  border-top-color: var(--accent);
+  border-top-color: var(--leaf);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
   display: inline-block;
   vertical-align: middle;
-  margin-right: 8px;
+  margin-right: var(--space-2);
 }
 @keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .spinner { animation-duration: 2.4s; } }
 
-footer { text-align: center; color: var(--muted); font-size: 13px; margin-top: 24px; }
+footer { text-align: center; color: var(--ink-muted); font-size: 14px; line-height: 20px; margin-top: var(--space-6); }

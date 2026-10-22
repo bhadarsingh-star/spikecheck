@@ -1,4 +1,4 @@
-# SpikeCheck
+# Glyko
 
 See how much each everyday Indian meal spikes your blood sugar, and rank your meals against each other, using your own glucometer readings.
 
@@ -22,7 +22,7 @@ See how much each everyday Indian meal spikes your blood sugar, and rank your me
 
 ## Current workflow → future workflow
 
-| | Today (without SpikeCheck) | With SpikeCheck |
+| | Today (without Glyko) | With Glyko |
 |---|---|---|
 | Before eating | Prick finger, read the number, maybe write it in a notebook | Type the number into the app |
 | The meal | Rely on memory ("I think it was 2 rotis and dal") | Snap a photo; AI lists dishes and portions; you fix anything wrong |

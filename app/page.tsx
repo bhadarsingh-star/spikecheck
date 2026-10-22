@@ -2,7 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import DishEditor from "@/components/DishEditor";
+import Logo from "@/components/Logo";
 import MealRanking from "@/components/MealRanking";
+import SpikeBadge from "@/components/SpikeBadge";
 import {
   findWaitingMeal,
   formatSpike,
@@ -171,8 +173,11 @@ export default function Home() {
 
   return (
     <main>
-      <h1>SpikeCheck</h1>
-      <p className="sub">See how much each meal spikes your sugar.</p>
+      <header className="brand">
+        <Logo />
+        <h1 className="brand-name">glyko</h1>
+      </header>
+      <p className="sub">Know which meals spike you.</p>
 
       {storageNotice && (
         <div className="error">Couldn&apos;t read your saved meals, so we started fresh.</div>
@@ -285,6 +290,7 @@ export default function Home() {
         <section className="card">
           <p className="muted">This meal spiked you by</p>
           <div className="spike">{formatSpike(spike(latestMeal)!)}</div>
+          <SpikeBadge value={spike(latestMeal)!} />
           <p className="muted">
             {latestMeal.before} → {latestMeal.after} mg/dL (measured)
           </p>

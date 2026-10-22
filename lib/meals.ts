@@ -15,6 +15,7 @@ export type Meal = {
   swap: string | null; // AI suggestion, null if not fetched yet or failed
 };
 
+// Kept from the app's earlier name so meals already logged aren't lost.
 const STORAGE_KEY = "spikecheck.meals";
 
 export const MIN_READING = 20;
@@ -63,6 +64,16 @@ export function saveMeals(meals: Meal[]): void {
   } catch {
     // Storage blocked (e.g. private browsing): the app still works for this visit.
   }
+}
+
+// Display bands for comparing meals (not clinical targets):
+// under +30 small, +30 to +50 medium, over +50 large.
+export type SpikeBand = "small" | "medium" | "large";
+
+export function spikeBand(value: number): SpikeBand {
+  if (value > 50) return "large";
+  if (value >= 30) return "medium";
+  return "small";
 }
 
 export function formatSpike(value: number): string {
