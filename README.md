@@ -2,6 +2,8 @@
 
 See how much each everyday Indian meal spikes your blood sugar, and rank your meals against each other, using your own glucometer readings.
 
+**Live app:** https://spikecheck.vercel.app
+
 > For personal tracking, not medical advice.
 
 ## Job to be done

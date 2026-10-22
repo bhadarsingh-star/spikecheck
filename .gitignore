@@ -14,3 +14,4 @@ next-env.d.ts
 # Mac and Vercel clutter
 .DS_Store
 .vercel
+.env*
