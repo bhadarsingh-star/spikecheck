@@ -1,14 +1,16 @@
 "use client";
 
+import NutritionFacts from "@/components/NutritionFacts";
 import SpikeBadge from "@/components/SpikeBadge";
-import { verdictFor, type Estimate } from "@/lib/estimate";
+import { verdictFor, type Estimate, type Nutrition } from "@/lib/estimate";
 import { formatSpike } from "@/lib/meals";
 import { TARGET_AFTER } from "@/lib/profile";
 
 // "Should I eat this?": the expected spike, a plain-rule verdict and lighter options.
-export default function EstimateCard({ before, estimate, onEat, onChange }: {
+export default function EstimateCard({ before, estimate, nutrition, onEat, onChange }: {
   before: number;
   estimate: Estimate;
+  nutrition: Nutrition;
   onEat: () => void;
   onChange: () => void;
 }) {
@@ -25,6 +27,8 @@ export default function EstimateCard({ before, estimate, onEat, onChange }: {
         {peak < TARGET_AFTER ? `, under the ${TARGET_AFTER} target.` : `, over the ${TARGET_AFTER} target.`}
       </p>
       <span className={`verdict ${verdict.tone}`}>{verdict.label}</span>
+
+      <NutritionFacts nutrition={nutrition} title="This plate" />
 
       {estimate.alternatives.length > 0 && (
         <>

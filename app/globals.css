@@ -247,6 +247,17 @@ details[open] summary { margin-bottom: var(--space-4); }
 .sub-line { font-size: 14px; line-height: 20px; color: var(--ink-muted); }
 .pill { white-space: nowrap; font-size: 14px; line-height: 20px; font-weight: 600; padding: 4px 12px; border-radius: var(--radius-pill); border: 1px solid var(--line); color: var(--ink-muted); }
 
+/* Nutrition: five small tiles */
+.nutrition { margin: var(--space-4) 0; }
+.nutrition-title { margin: 0 0 var(--space-2); font-weight: 600; }
+.nutrition-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; margin: 0; }
+.nutrition-tile { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 8px 4px; text-align: center; min-width: 0; }
+.nutrition-tile dt { font-size: 12px; line-height: 16px; color: var(--ink-muted); }
+.nutrition-tile dd { margin: 2px 0 0; font-size: 18px; line-height: 22px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.nutrition-tile dd span { font-size: 12px; font-weight: 600; color: var(--ink-muted); }
+.nutrition-tip { margin: var(--space-2) 0 0; font-size: 16px; line-height: 24px; }
+@media (max-width: 360px) { .nutrition-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
 /* "Should I eat this?" verdicts */
 .verdict { display: inline-block; font-size: 16px; line-height: 24px; font-weight: 600; padding: 4px 14px; border-radius: var(--radius-pill); }
 .verdict.good { background: var(--leaf-soft); color: var(--leaf); }

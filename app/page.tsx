@@ -5,12 +5,13 @@ import DishEditor from "@/components/DishEditor";
 import EstimateCard from "@/components/EstimateCard";
 import Logo from "@/components/Logo";
 import MealRanking from "@/components/MealRanking";
+import NutritionFacts from "@/components/NutritionFacts";
 import Onboarding from "@/components/Onboarding";
 import Saathi from "@/components/Saathi";
 import SpikeBadge from "@/components/SpikeBadge";
 import TodayCard from "@/components/TodayCard";
 import WeekCard from "@/components/WeekCard";
-import { estimateSpike, type Estimate } from "@/lib/estimate";
+import { estimateSpike, nutritionFor, type Estimate } from "@/lib/estimate";
 import { afterMealNote, introMessages, readingWarning } from "@/lib/guide";
 import {
   REMINDER_AFTER_MS,
@@ -445,7 +446,13 @@ export default function Home() {
           )}
 
           {stage === "estimate" && estimate && before !== null && (
-            <EstimateCard before={before} estimate={estimate} onEat={eatAsPlanned} onChange={() => setStage("confirm")} />
+            <EstimateCard
+              before={before}
+              estimate={estimate}
+              nutrition={nutritionFor(dishes)}
+              onEat={eatAsPlanned}
+              onChange={() => setStage("confirm")}
+            />
           )}
 
           {stage === "waiting" && waitingMeal && dueAt && (
@@ -496,6 +503,7 @@ export default function Home() {
               {readingWarning(latestMeal.after!) && (
                 <div className="error" role="alert">{readingWarning(latestMeal.after!)}</div>
               )}
+              <NutritionFacts nutrition={nutritionFor(latestMeal.dishes)} title="What you ate" tip={false} />
               <Saathi messages={[afterMealNote(latestMeal)]} role="Your Glyko health guide" />
               <div className="row">
                 <button className="primary" onClick={backToToday}>Back to today</button>

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import SpikeBadge from "@/components/SpikeBadge";
+import { nutritionFor } from "@/lib/estimate";
 import { spike, type Meal } from "@/lib/meals";
 
 type Props = {
@@ -24,6 +25,7 @@ export default function MealRanking({ ranked, latestId, swapLoadingIds, onRetryS
       <ol className="rank">
         {ranked.map((meal, i) => {
           const value = spike(meal)!;
+          const food = nutritionFor(meal.dishes);
           const loading = swapLoadingIds.includes(meal.id);
           return (
             <li key={meal.id}>
@@ -36,6 +38,7 @@ export default function MealRanking({ ranked, latestId, swapLoadingIds, onRetryS
               </div>
               <div className="muted">
                 {meal.before} → {meal.after} mg/dL (measured)
+                {food.kcal > 0 && <> · about {food.kcal} kcal, {food.carbs} g carbs</>}
               </div>
               <div className="swap">
                 {meal.swap ? (

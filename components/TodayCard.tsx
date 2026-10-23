@@ -1,5 +1,7 @@
+import NutritionFacts from "@/components/NutritionFacts";
 import SpikeBadge from "@/components/SpikeBadge";
 import Saathi from "@/components/Saathi";
+import { nutritionFor, sumNutrition } from "@/lib/estimate";
 import { dayNote } from "@/lib/guide";
 import { spike, type Meal } from "@/lib/meals";
 import { MEAL_LABELS, formatTime, mealTypeAt, type MealType, type Profile } from "@/lib/profile";
@@ -35,6 +37,9 @@ export default function TodayCard({ profile, todays }: { profile: Profile; today
           ));
         })}
       </ul>
+      {todays.length > 0 && (
+        <NutritionFacts nutrition={sumNutrition(todays.map((m) => nutritionFor(m.dishes)))} title="Today so far" tip={false} />
+      )}
       <Saathi messages={[dayNote(todays)]} role="Your Glyko health guide" />
     </section>
   );
