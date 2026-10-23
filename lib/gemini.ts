@@ -1,5 +1,11 @@
 // Shared Gemini setup for the AI routes. Server only: the key never reaches the phone.
-import { ApiError, GoogleGenAI, type GenerateContentParameters, type GenerateContentResponse } from "@google/genai";
+import {
+  ApiError,
+  GoogleGenAI,
+  ThinkingLevel,
+  type GenerateContentParameters,
+  type GenerateContentResponse,
+} from "@google/genai";
 
 // Always the current stable Flash model: fast, reads images, cheap.
 export const GEMINI_MODEL = "gemini-flash-latest";
@@ -10,19 +16,32 @@ const FALLBACK_MODEL = "gemini-flash-lite-latest";
 export const isBusy = (error: unknown) =>
   error instanceof ApiError && (error.status === 503 || error.status === 429);
 
-// Calls Gemini; when it's busy, waits a moment and retries once, then tries the lighter model.
+export const isTimeout = (error: unknown) =>
+  error instanceof Error && (error.name === "AbortError" || error.name === "TimeoutError");
+
+// Calls Gemini within `budgetMs`. The main model gets about 60% of the time;
+// if it's busy or too slow, the lighter model gets the rest. Thinking is kept
+// minimal: these are quick tasks, and thinking makes answers much slower.
 export async function generateWithFallback(
   ai: GoogleGenAI,
   params: Omit<GenerateContentParameters, "model">,
+  budgetMs: number,
 ): Promise<GenerateContentResponse> {
-  const attempts = [GEMINI_MODEL, GEMINI_MODEL, FALLBACK_MODEL];
-  for (let i = 0; ; i++) {
-    try {
-      return await ai.models.generateContent({ ...params, model: attempts[i] });
-    } catch (error) {
-      if (!isBusy(error) || i === attempts.length - 1) throw error;
-      if (i === 0) await new Promise((resolve) => setTimeout(resolve, 800));
-    }
+  const deadline = Date.now() + budgetMs;
+  const config = { ...params.config, thinkingConfig: { thinkingLevel: ThinkingLevel.MINIMAL } };
+  try {
+    return await ai.models.generateContent({
+      ...params,
+      model: GEMINI_MODEL,
+      config: { ...config, abortSignal: AbortSignal.timeout(Math.round(budgetMs * 0.6)) },
+    });
+  } catch (error) {
+    if (!isBusy(error) && !isTimeout(error)) throw error;
+    return ai.models.generateContent({
+      ...params,
+      model: FALLBACK_MODEL,
+      config: { ...config, abortSignal: AbortSignal.timeout(Math.max(1000, deadline - Date.now())) },
+    });
   }
 }
 
@@ -36,6 +55,3 @@ export function geminiClient(): GoogleGenAI | KeyProblem {
   if (!/^[\x21-\x7e]+$/.test(apiKey)) return "malformed";
   return new GoogleGenAI({ apiKey });
 }
-
-// Gives up on a request after `ms`, so the user isn't left waiting.
-export const timeLimit = (ms: number) => AbortSignal.timeout(ms);

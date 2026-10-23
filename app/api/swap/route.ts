@@ -1,7 +1,7 @@
 // AI call #2: one swap suggestion for a finished meal, with Gemini.
 // If this fails, the app shows a plain-code swap instead (lib/estimate.ts).
 
-import { generateWithFallback, geminiClient, timeLimit } from "@/lib/gemini";
+import { generateWithFallback, geminiClient } from "@/lib/gemini";
 
 type DishInput = { name: string; portion: string };
 
@@ -26,8 +26,8 @@ export async function POST(request: Request) {
 ${dishList}
 
 Suggest ONE realistic, familiar Indian swap for the dish most likely responsible, so the next similar meal spikes less. Under 20 words. Reply with the suggestion only. No medical claims.`,
-      config: { temperature: 0.4, maxOutputTokens: 200, abortSignal: timeLimit(15_000) },
-    });
+      config: { temperature: 0.4, maxOutputTokens: 200 },
+    }, 15_000);
 
     const text = response.text?.trim();
     if (!text) return Response.json({ error: "No suggestion" }, { status: 502 });

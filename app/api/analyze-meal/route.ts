@@ -3,7 +3,7 @@
 
 import { ApiError } from "@google/genai";
 import { z } from "zod";
-import { generateWithFallback, geminiClient, isBusy, timeLimit } from "@/lib/gemini";
+import { generateWithFallback, geminiClient, isBusy, isTimeout } from "@/lib/gemini";
 
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 
@@ -97,9 +97,8 @@ export async function POST(request: Request) {
         responseMimeType: "application/json",
         responseJsonSchema: RESPONSE_SCHEMA,
         temperature: 0.2,
-        abortSignal: timeLimit(12_000),
       },
-    });
+    }, 12_000);
 
     // Blocked or empty replies, or anything not in the fixed shape, count as "unclear".
     let parsed: unknown = null;
@@ -119,9 +118,7 @@ export async function POST(request: Request) {
     return Response.json({ ok: true, dishes });
   } catch (error) {
     console.error("analyze-meal failed:", error);
-    if (error instanceof Error && (error.name === "AbortError" || error.name === "TimeoutError")) {
-      return fail(ERRORS.timeout, 504);
-    }
+    if (isTimeout(error)) return fail(ERRORS.timeout, 504);
     if (isBusy(error)) return fail(ERRORS.busy, 503);
     if (error instanceof ApiError) {
       const keyRejected = error.status === 401 || error.status === 403 || /api key/i.test(error.message);
