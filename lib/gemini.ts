@@ -21,14 +21,14 @@ export const isTimeout = (error: unknown) =>
 
 // Calls Gemini within `budgetMs`. The main model gets about 60% of the time;
 // if it's busy or too slow, the lighter model gets the rest. Thinking is kept
-// minimal: these are quick tasks, and thinking makes answers much slower.
+// low: these are quick tasks, and thinking makes answers much slower.
 export async function generateWithFallback(
   ai: GoogleGenAI,
   params: Omit<GenerateContentParameters, "model">,
   budgetMs: number,
 ): Promise<GenerateContentResponse> {
   const deadline = Date.now() + budgetMs;
-  const config = { ...params.config, thinkingConfig: { thinkingLevel: ThinkingLevel.MINIMAL } };
+  const config = { ...params.config, thinkingConfig: { thinkingLevel: ThinkingLevel.LOW } };
   try {
     return await ai.models.generateContent({
       ...params,
