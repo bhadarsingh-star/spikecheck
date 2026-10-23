@@ -26,11 +26,14 @@ export async function POST(request: Request) {
 ${dishList}
 
 Suggest ONE realistic, familiar Indian swap for the dish most likely responsible, so the next similar meal spikes less. Under 20 words. Reply with the suggestion only. No medical claims.`,
-      config: { temperature: 0.4, maxOutputTokens: 200 },
+      // The allowance also covers Gemini's thinking, so leave plenty of room.
+      config: { temperature: 0.4, maxOutputTokens: 2000 },
     }, 15_000);
 
+    // A reply cut off by the length limit is half a sentence: treat it as no suggestion.
+    const cutOff = response.candidates?.[0]?.finishReason === "MAX_TOKENS";
     const text = response.text?.trim();
-    if (!text) return Response.json({ error: "No suggestion" }, { status: 502 });
+    if (!text || cutOff) return Response.json({ error: "No suggestion" }, { status: 502 });
     return Response.json({ swap: text });
   } catch (error) {
     console.error("swap failed:", error);
