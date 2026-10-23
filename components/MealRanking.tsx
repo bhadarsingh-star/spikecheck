@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import SpikeBadge from "@/components/SpikeBadge";
 import { spike, type Meal } from "@/lib/meals";
 
@@ -8,9 +9,13 @@ type Props = {
   latestId: string | null;
   swapLoadingIds: string[];
   onRetrySwap: (meal: Meal) => void;
+  onDelete: (meal: Meal) => void;
 };
 
-export default function MealRanking({ ranked, latestId, swapLoadingIds, onRetrySwap }: Props) {
+export default function MealRanking({ ranked, latestId, swapLoadingIds, onRetrySwap, onDelete }: Props) {
+  // The meal whose "Delete this meal?" question is showing, if any.
+  const [confirmingId, setConfirmingId] = useState<string | null>(null);
+
   if (ranked.length === 0) return null;
 
   return (
@@ -46,6 +51,19 @@ export default function MealRanking({ ranked, latestId, swapLoadingIds, onRetryS
                   </span>
                 )}
               </div>
+              {confirmingId === meal.id ? (
+                <div className="confirm" role="group" aria-label="Confirm delete">
+                  <span>Delete this meal?</span>
+                  <button className="link danger" onClick={() => { setConfirmingId(null); onDelete(meal); }}>
+                    Delete
+                  </button>
+                  <button className="link" onClick={() => setConfirmingId(null)}>Keep</button>
+                </div>
+              ) : (
+                <button className="link subtle" onClick={() => setConfirmingId(meal.id)}>
+                  Delete
+                </button>
+              )}
             </li>
           );
         })}

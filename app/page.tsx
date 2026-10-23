@@ -69,7 +69,7 @@ export default function Home() {
     try {
       image = await resizeImage(file);
     } catch {
-      setPhotoError("Couldn't open this photo. Try a JPG or take a new one.");
+      setPhotoError("Couldn't open this photo. Try another photo or take a new one.");
       return;
     }
 
@@ -154,6 +154,14 @@ export default function Home() {
     });
   }
 
+  function deleteMeal(meal: Meal) {
+    setMeals((latest) => {
+      const next = latest.filter((m) => m.id !== meal.id);
+      saveMeals(next);
+      return next;
+    });
+  }
+
   function discardWaitingMeal() {
     if (!waitingMeal) return;
     updateMeals(meals.filter((m) => m.id !== waitingMeal.id));
@@ -212,7 +220,7 @@ export default function Home() {
           <input
             ref={fileInput}
             type="file"
-            accept="image/*"
+            accept="image/*,.heic,.heif"
             capture="environment"
             hidden
             onChange={(e) => handlePhoto(e.target.files?.[0])}
@@ -304,6 +312,7 @@ export default function Home() {
           latestId={latestId}
           swapLoadingIds={swapLoadingIds}
           onRetrySwap={fetchSwap}
+          onDelete={deleteMeal}
         />
       )}
 

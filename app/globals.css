@@ -179,6 +179,9 @@ button.link { background: none; border: none; color: var(--leaf); padding: 6px 0
 .rank .top { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-2); font-weight: 600; }
 .rank .top > span:first-child { min-width: 0; }
 .rank .swap { font-size: 16px; line-height: 24px; margin-top: var(--space-1); }
+.rank button.link.subtle { color: var(--ink-muted); font-weight: 400; font-size: 15px; }
+.rank button.link.danger { color: var(--chilli); }
+.rank .confirm { display: flex; align-items: center; gap: var(--space-4); font-size: 16px; }
 
 .spinner {
   width: 22px; height: 22px;
