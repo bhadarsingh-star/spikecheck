@@ -40,7 +40,7 @@ export default function MealRanking({ ranked, latestId, swapLoadingIds, onRetryS
               <div className="swap">
                 {meal.swap ? (
                   <>
-                    <span className="badge">AI suggestion</span> {meal.swap}
+                    <span className="badge">Swap idea</span> {meal.swap}
                   </>
                 ) : loading ? (
                   <span className="muted"><span className="spinner" />Getting a swap idea…</span>

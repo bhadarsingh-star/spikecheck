@@ -1,5 +1,7 @@
 // Plain code only: no AI in this file. Readings, spike maths, ranking and saving.
 
+import type { MealType } from "@/lib/profile";
+
 export type Dish = {
   name: string;
   portion: string;
@@ -13,7 +15,16 @@ export type Meal = {
   after: number | null; // null while waiting for the after-meal reading
   dishes: Dish[];
   swap: string | null; // AI suggestion, null if not fetched yet or failed
+  mealType?: MealType; // missing on meals logged before meal types existed
+  expected?: number | null; // estimated spike shown before eating, in mg/dL
 };
+
+export const REMINDER_AFTER_MS = 2 * 60 * 60 * 1000;
+
+// Meals logged on the same calendar day as `day`.
+export function mealsOn(meals: Meal[], day: Date): Meal[] {
+  return meals.filter((m) => new Date(m.createdAt).toDateString() === day.toDateString());
+}
 
 // Kept from the app's earlier name so meals already logged aren't lost.
 const STORAGE_KEY = "spikecheck.meals";

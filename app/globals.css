@@ -84,7 +84,7 @@ h2 { font-size: 21px; line-height: 28px; font-weight: 600; margin: 0 0 12px; }
 
 label { display: block; font-weight: 600; margin-bottom: var(--space-2); }
 
-input[type="number"], input[type="text"] {
+input[type="number"], input[type="text"], input[type="email"] {
   width: 100%;
   min-height: var(--space-12);
   font: inherit;
@@ -197,3 +197,73 @@ button.link { background: none; border: none; color: var(--leaf); padding: 6px 0
 @media (prefers-reduced-motion: reduce) { .spinner { animation-duration: 2.4s; } }
 
 footer { text-align: center; color: var(--ink-muted); font-size: 14px; line-height: 20px; margin-top: var(--space-6); }
+footer .footer-links { margin: 0 0 var(--space-2); }
+footer .footer-links button.link, footer .footer-links a { font-size: 14px; color: var(--leaf); }
+
+input[type="time"] {
+  font: inherit;
+  font-size: 18px;
+  min-height: var(--space-12);
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+}
+
+/* Profile setup */
+.step-label { font-size: 14px; line-height: 20px; font-weight: 600; color: var(--ink-muted); margin: 0 0 var(--space-2); }
+.field { margin-bottom: var(--space-4); }
+.field-label { font-weight: 600; margin: 0 0 var(--space-2); }
+.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-2); }
+.time-row { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); }
+.time-row label { margin: 0; }
+.chips { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.chip { min-height: 44px; padding: 8px 16px; border-radius: var(--radius-pill); font-weight: 500; font-size: 16px; background: var(--surface); }
+.chip.on { background: var(--leaf); color: var(--on-leaf); border-color: var(--leaf); font-weight: 600; }
+
+/* Saathi, the guide */
+.saathi { margin-top: var(--space-4); }
+.card > .saathi:first-child, details .saathi { margin-top: 0; }
+.saathi-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.saathi-avatar {
+  width: 44px; height: 44px; flex: none; border-radius: 50%;
+  background: var(--leaf); color: var(--on-leaf);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display), "Baloo 2", system-ui, sans-serif; font-size: 22px; font-weight: 700;
+}
+.saathi-name { margin: 0; font-weight: 600; }
+.saathi-role { margin: 0; font-size: 14px; line-height: 20px; color: var(--ink-muted); }
+.saathi-chat { display: flex; flex-direction: column; gap: var(--space-2); }
+.saathi-msg { margin: 0; background: var(--leaf-soft); border-radius: 4px var(--radius-md) var(--radius-md) var(--radius-md); padding: 10px 14px; font-size: 17px; line-height: 26px; }
+details summary { cursor: pointer; font-weight: 600; color: var(--leaf); min-height: 32px; }
+details[open] summary { margin-bottom: var(--space-4); }
+
+/* Lists of meals and options */
+.plain-list { list-style: none; padding: 0; margin: 0; }
+.plain-list li { display: flex; justify-content: space-between; align-items: center; gap: var(--space-2); padding: 10px 0; border-top: 1px solid var(--line); }
+.plain-list li:first-child { border-top: none; }
+.plain-list li > span:first-child { min-width: 0; }
+.sub-line { font-size: 14px; line-height: 20px; color: var(--ink-muted); }
+.pill { white-space: nowrap; font-size: 14px; line-height: 20px; font-weight: 600; padding: 4px 12px; border-radius: var(--radius-pill); border: 1px solid var(--line); color: var(--ink-muted); }
+
+/* "Should I eat this?" verdicts */
+.verdict { display: inline-block; font-size: 16px; line-height: 24px; font-weight: 600; padding: 4px 14px; border-radius: var(--radius-pill); }
+.verdict.good { background: var(--leaf-soft); color: var(--leaf); }
+.verdict.ok { background: var(--haldi); color: var(--on-haldi); }
+.verdict.swap { background: var(--chilli); color: var(--on-chilli); }
+
+/* Reminders */
+.reminder-title { margin: 0 0 var(--space-1); font-weight: 600; font-size: 19px; }
+.reminder.due { border-color: var(--haldi); border-width: 2px; }
+.reminders-line { margin: 0 0 var(--space-6); }
+.reminders-line button.link { font-size: 16px; }
+
+/* Weekly chart: bars drawn to scale */
+.week-chart { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; align-items: end; height: 150px; margin: var(--space-4) 0 var(--space-2); }
+.week-col { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; gap: 4px; }
+.week-n { font-size: 13px; line-height: 16px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.week-fill { width: 100%; border-radius: 6px 6px 2px 2px; background: var(--leaf); }
+.week-fill.mid { background: var(--haldi); }
+.week-fill.high { background: var(--chilli); }
+.week-days { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; text-align: center; font-size: 13px; color: var(--ink-muted); }
