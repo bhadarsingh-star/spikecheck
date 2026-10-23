@@ -3,7 +3,7 @@
 
 import { ApiError } from "@google/genai";
 import { z } from "zod";
-import { GEMINI_MODEL, geminiClient, timeLimit } from "@/lib/gemini";
+import { generateWithFallback, geminiClient, isBusy, timeLimit } from "@/lib/gemini";
 
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 
@@ -83,8 +83,7 @@ export async function POST(request: Request) {
   if (image.length * 0.75 > MAX_IMAGE_BYTES) return fail(ERRORS.badInput, 400);
 
   try {
-    const response = await ai.models.generateContent({
-      model: GEMINI_MODEL,
+    const response = await generateWithFallback(ai, {
       contents: [
         {
           role: "user",
@@ -123,8 +122,8 @@ export async function POST(request: Request) {
     if (error instanceof Error && (error.name === "AbortError" || error.name === "TimeoutError")) {
       return fail(ERRORS.timeout, 504);
     }
+    if (isBusy(error)) return fail(ERRORS.busy, 503);
     if (error instanceof ApiError) {
-      if (error.status === 429) return fail(ERRORS.busy, 503);
       const keyRejected = error.status === 401 || error.status === 403 || /api key/i.test(error.message);
       if (keyRejected) return fail(ERRORS.badKey, 500);
     }

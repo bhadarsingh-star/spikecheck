@@ -1,7 +1,7 @@
 // AI call #2: one swap suggestion for a finished meal, with Gemini.
 // If this fails, the app shows a plain-code swap instead (lib/estimate.ts).
 
-import { GEMINI_MODEL, geminiClient, timeLimit } from "@/lib/gemini";
+import { generateWithFallback, geminiClient, timeLimit } from "@/lib/gemini";
 
 type DishInput = { name: string; portion: string };
 
@@ -21,8 +21,7 @@ export async function POST(request: Request) {
   const dishList = dishes.map((d) => `- ${d.name} (${d.portion})`).join("\n");
 
   try {
-    const response = await ai.models.generateContent({
-      model: GEMINI_MODEL,
+    const response = await generateWithFallback(ai, {
       contents: `This home-cooked Indian meal changed blood sugar by ${spike} mg/dL (2 hours after vs before) for an adult with type 2 diabetes:
 ${dishList}
 
