@@ -11,6 +11,7 @@ import Saathi from "@/components/Saathi";
 import SpikeBadge from "@/components/SpikeBadge";
 import TodayCard from "@/components/TodayCard";
 import WeekCard from "@/components/WeekCard";
+import Welcome from "@/components/Welcome";
 import { estimateSpike, nutritionFor, type Estimate } from "@/lib/estimate";
 import { afterMealNote, introMessages, readingWarning } from "@/lib/guide";
 import {
@@ -72,6 +73,7 @@ export default function Home() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loaded, setLoaded] = useState(false);
   const [editingProfile, setEditingProfile] = useState(false);
+  const [started, setStarted] = useState(false); // a new visitor tapped "Get started"
   const [logging, setLogging] = useState(false);
   const [stage, setStage] = useState<Stage>("before");
   const [meals, setMeals] = useState<Meal[]>([]);
@@ -292,6 +294,11 @@ export default function Home() {
   const beforeWarning = before !== null ? readingWarning(before) : null;
   const afterWarning = after !== null ? readingWarning(after) : null;
   const due = dueAt !== null && dueAt <= now;
+
+  // First visit: the home page, until they tap "Get started".
+  if (loaded && !profile && !started) {
+    return <Welcome onStart={() => { setStarted(true); window.scrollTo(0, 0); }} />;
+  }
 
   return (
     <main>

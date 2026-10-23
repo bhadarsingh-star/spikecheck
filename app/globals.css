@@ -278,3 +278,62 @@ details[open] summary { margin-bottom: var(--space-4); }
 .week-fill.mid { background: var(--haldi); }
 .week-fill.high { background: var(--chilli); }
 .week-days { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; text-align: center; font-size: 13px; color: var(--ink-muted); }
+
+/* Home page for first-time visitors: a full-width brand hero, then how it works.
+   The hero keeps the brand green in both themes, like the cover slide. */
+.welcome { min-height: 100vh; background: var(--surface); }
+.welcome-hero {
+  position: relative;
+  overflow: hidden;
+  background: #1E6B47;
+  color: #FBFCFB;
+  padding: 56px max(16px, env(safe-area-inset-left, 0px)) 64px max(16px, env(safe-area-inset-right, 0px));
+}
+.welcome-ring { position: absolute; right: -70px; bottom: -150px; width: 260px; height: 260px; }
+.welcome-inner { position: relative; max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+.welcome-brand { display: flex; align-items: center; gap: 12px; color: #FBFCFB; }
+.welcome-brand svg { width: 52px; height: 57px; flex: none; }
+.welcome-wordmark { font-family: var(--font-display), "Baloo 2", system-ui, sans-serif; font-size: 48px; line-height: 1; font-weight: 700; margin-top: 6px; }
+.welcome-tagline {
+  margin: 12px 0 0;
+  max-width: 11ch;
+  font-family: var(--font-display), "Baloo 2", system-ui, sans-serif;
+  font-size: clamp(48px, 11vw, 96px);
+  line-height: 0.98;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.welcome-sub { margin: 0; max-width: 34ch; font-size: 20px; line-height: 30px; color: #DDEFE4; }
+.welcome-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; margin-top: 12px; }
+.welcome-start {
+  min-height: 56px;
+  padding: 12px 32px;
+  border-radius: var(--radius-md);
+  border: none;
+  background: #F2B71F;
+  color: #13261D;
+  font-size: 19px;
+  font-weight: 700;
+}
+.welcome-start:focus-visible { outline: 3px solid #FBFCFB; outline-offset: 3px; }
+.welcome-demo { color: #FBFCFB; font-weight: 600; font-size: 18px; text-underline-offset: 4px; }
+.welcome-demo:hover { color: #F2B71F; }
+
+.welcome-steps { max-width: 960px; margin: 0 auto; padding: 40px max(16px, env(safe-area-inset-left, 0px)) 48px max(16px, env(safe-area-inset-right, 0px)); }
+.welcome-steps ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.welcome-steps li { display: flex; gap: 16px; align-items: flex-start; background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 20px; }
+.welcome-steps h2 { margin: 0 0 4px; font-size: 20px; line-height: 26px; }
+.welcome-steps p { margin: 0; font-size: 16px; line-height: 24px; color: var(--ink-muted); }
+.welcome-num {
+  flex: none; width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--leaf); color: var(--on-leaf);
+  font-family: var(--font-display), "Baloo 2", system-ui, sans-serif; font-size: 20px; font-weight: 700;
+}
+.welcome-num.haldi { background: var(--haldi); color: var(--on-haldi); }
+.welcome-note { margin: 24px 0 0; text-align: center; font-size: 14px; line-height: 20px; color: var(--ink-muted); }
+@media (min-width: 720px) {
+  .welcome-hero { padding-top: 88px; padding-bottom: 104px; }
+  .welcome-ring { right: 6%; bottom: -60px; width: 440px; height: 440px; }
+}
